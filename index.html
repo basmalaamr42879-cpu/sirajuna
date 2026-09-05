@@ -1,22 +1,33 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>معرض أعمالي البرمجية</title>
+  <title>معرض أعمال بسملة البرمجي | Full-Stack Developer</title>
+  
+  <!-- ربط خط Cairo الاحترافي من Google Fonts -->
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <style>
+    /* التنسيقات العامة للموقع */
     body {
       background-color: #12141a !important;
       color: #f5f6fa !important;
+      font-family: 'Cairo', sans-serif !important;
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Cairo', sans-serif;
     }
     h1 {
       text-shadow: 0 2px 12px rgba(74, 144, 226, 0.4);
-      font-family: sans-serif;
     }
     .container {
       direction: rtl; 
-      font-family: sans-serif; 
-      max-width: 650px; 
+      max-width: 700px; 
       margin: 0 auto; 
       padding: 30px 20px; 
       line-height: 1.7; 
@@ -28,7 +39,7 @@
       border-radius: 10px;
       border-right: 4px solid #4a90e2;
       text-align: right;
-      margin-top: 20px;
+      margin-top: 25px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
     .tag {
@@ -41,40 +52,105 @@
       font-weight: bold;
       margin-bottom: 15px;
     }
-    ul { padding-right: 20px; list-style-type: square; }
-    li { margin-bottom: 10px; color: #dcdde1; }
-    .btn-container { margin-top: 30px; display: flex; gap: 15px; justify-content: center; }
-    .custom-btn {
-      display: inline-block; padding: 12px 28px; font-size: 16px; font-weight: bold;
-      text-decoration: none; border-radius: 6px; transition: transform 0.2s, background-color 0.2s;
-      cursor: pointer; border: none;
+    ul {
+      padding-right: 20px;
+      list-style-type: square;
     }
-    .btn-blue { background-color: #4a90e2; color: white; }
-    .btn-blue:hover { background-color: #357abd; transform: translateY(-2px); }
+    li {
+      margin-bottom: 10px;
+      color: #dcdde1;
+    }
+    .btn-container {
+      margin-top: 30px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    .custom-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: transform 0.2s, background-color 0.2s;
+      cursor: pointer;
+      border: none;
+    }
     .btn-green { background-color: #2ecc71; color: white; }
     .btn-green:hover { background-color: #27ae60; transform: translateY(-2px); }
 
-    /* صندوق الرسائل التفاعلي */
+    /* قسم المهارات (Tech Stack Badges) */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .skill-badge {
+      background: #252833;
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 14px;
+      border: 1px solid #3b3f52;
+    }
+
+    /* تنسيق نافذة تواصل معي (Modal) */
     .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center;
-      z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 1000;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
     }
     .modal-box {
-      background: #1c1e26; padding: 30px; border-radius: 12px; width: 90%; max-width: 450px;
-      text-align: right; border: 1px solid #4a90e2; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      transform: translateY(-20px); transition: transform 0.3s ease;
+      background: #1c1e26;
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%; max-width: 450px;
+      text-align: right;
+      border: 1px solid #4a90e2;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      transform: translateY(-20px);
+      transition: transform 0.3s ease;
     }
-    .modal-overlay.active { opacity: 1 !important; pointer-events: auto !important; }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
     .modal-overlay.active .modal-box { transform: translateY(0); }
+    .modal-box h3 { margin-top: 0; color: #4a90e2; }
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; margin-bottom: 5px; font-size: 14px; }
     .form-group input, .form-group textarea {
       width: 100%; padding: 10px; background: #252833; border: 1px solid #3b3f52;
-      border-radius: 6px; color: white; font-family: sans-serif;
+      border-radius: 6px; color: white; font-family: 'Cairo', sans-serif;
+      box-sizing: border-box;
     }
     .form-group textarea { height: 100px; resize: none; }
     .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+    /* تنسيق تذييل الصفحة (Footer) */
+    footer {
+      margin-top: 60px;
+      padding: 20px;
+      border-top: 1px solid #1c1e26;
+      font-size: 14px;
+      color: #718093;
+    }
+    .footer-links {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .footer-links a {
+      color: #4a90e2;
+      text-decoration: none;
+    }
+    .footer-links a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -82,39 +158,72 @@
   <div class="container">
     <span class="tag">🧬 Full-Stack Web Developer</span>
     <h1 style="color: #4a90e2; margin-top: 5px;">مرحباً بكم في عالمي البرمجي</h1>
-    <p style="color: #a4b0be; font-style: italic; margin-bottom: 25px;">"أبني الأفكار المعقدة خلف كواليس الكود, وأحولها إلى واجهات ويب حية وبسيطة."</p>
+    <p style="color: #a4b0be; font-style: italic; margin-bottom: 25px;">"أبني الأفكار المعقدة خلف كواليس الكود، وأحولها إلى واجهات ويب حية وبسيطة."</p>
     
+    <!-- بطاقة التعريف الشخصية -->
     <div class="card">
-      <h3>⚡ من أنا؟</h3>
-      <p>أنا مطورة ويب مستقلة (Freelancer), متخصصة في بناء وتصميم المواقع الإلكترونية بالكامل من الصفر. أعمل بشكل حر ومستقل تماماً لتقديم حلول برمجية ذكية وسريعة تناسب احتياجات عملي وأصحاب المشاريع.</p>
+      <h3 style="color: #4a90e2; margin-bottom: 10px;">⚡ من أنا؟</h3>
+      <p>أنا مطورة ويب مستقلة (Freelancer)، متخصصة في بناء وتصميم المواقع الإلكترونية بالكامل من الصفر. أعمل بشكل حر ومستقل تماماً لتقديم حلول برمجية ذكية وسريعة تناسب احتياجات عملائي وأصحاب المشاريع، مع الحفاظ على هوية بصرية فريدة لكل مشروع.</p>
     </div>
 
+    <!-- بطاقة المهارات التقنية (Tech Stack) -->
     <div class="card">
-      <h3 style="color: #2ecc71;">🛠️ الخدمات التي يمكنني تقديمها لك:</h3>
+      <h3 style="color: #e24a8d; margin-bottom: 10px;">🛠️ التقنيات واللغات (Tech Stack)</h3>
+      <div class="skills-container">
+        <span class="skill-badge">HTML5</span>
+        <span class="skill-badge">CSS3</span>
+        <span class="skill-badge">JavaScript (ES6+)</span>
+        <span class="skill-badge">Bootstrap / Tailwind</span>
+        <span class="skill-badge">Node.js</span>
+        <span class="skill-badge">Express.js</span>
+        <span class="skill-badge">MongoDB / SQL</span>
+        <span class="skill-badge">Git & GitHub</span>
+      </div>
+    </div>
+
+    <!-- بطاقة الخدمات -->
+    <div class="card">
+      <h3 style="color: #2ecc71; margin-bottom: 10px;">💼 الخدمات التي يمكنني تقديمها لك:</h3>
       <ul>
-        <li><strong>تصميم واجهات المستخدم (Frontend):</strong> بناء صفحات ويب متناسقة وجذابة تعمل على كل الأجهزة.</li>
-        <li><strong>برمجة الأنظمة الخلفية (Backend):</strong> إدارة البيانات وحفظها وتأمينها خلف الكواليس بسلاسة.</li>
+        <li><strong>تصميم واجهات المستخدم (Frontend):</strong> بناء صفحات ويب متناسقة، جذابة، وتعمل بكفاءة عالية على الموبايل والتابلت والكمبيوتر.</li>
+        <li><strong>برمجة الأنظمة الخلفية (Backend):</strong> إدارة البيانات وحفظها وتأمينها خلف الكواليس لضمان عمل موقعكِ بسلاسة.</li>
+        <li><strong>تطوير واجهات كاملة (Full-Stack):</strong> تسليم مشروعك جاهزاً ومكتملاً من الصفر دون الحاجة للاستعانة بأدوات جاهزة مقيدة.</li>
       </ul>
     </div>
 
+    <!-- أزرار التفاعل الأساسية -->
     <div class="btn-container">
-      <button onclick="alert('قريباً سيتم ربط هذا الزر بمعرض مشاريعكِ الحقيقية!')" class="custom-btn btn-blue">شاهد معرض أعمالي</button>
       <button onclick="openContactModal()" class="custom-btn btn-green">وظفني / تواصل معي</button>
     </div>
+
+    <!-- تذييل الصفحة وروابط المنصات المهنية -->
+    <footer>
+      <p>© 2026 بسملة عمرو. جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank">GitHub</a>
+        <a href="#" target="_blank">LinkedIn</a>
+        <a href="#" target="_blank">حسابي على مستقل/خمسات</a>
+      </div>
+    </footer>
   </div>
 
-  <!-- نموذج الباك إند المربوط بحساب Forminit الخاص بكِ -->
+  <!-- نافذة صندوق الرسائل (Modal) جاهزة للربط مع خدمة الباك إند -->
   <div id="contactModal" class="modal-overlay">
     <div class="modal-box">
-      <form action="https://forminit.com" method="POST" id="backendForm">
-        <h3>📨 أرسل رسالة لي</h3>
+      <h3>Generic Form Backend | تواصل معي</h3>
+      
+      <form action="https://formspree.io" method="POST">
         <div class="form-group">
-          <label>الاسم بالكامل:</label>
-          <input type="text" name="name" id="clientName" placeholder="اكتب اسمك هنا" required>
+          <label for="clientName">الاسم بالكامل:</label>
+          <input type="text" id="clientName" name="name" placeholder="اكتب اسمك هنا" required>
         </div>
         <div class="form-group">
-          <label>تفاصيل مشروعك أو رسالتك:</label>
-          <textarea name="message" id="clientMessage" placeholder="اكتب تفاصيل الموقع الذي تريد بناءه..." required></textarea>
+          <label for="clientEmail">البريد الإلكتروني:</label>
+          <input type="email" id="clientEmail" name="email" placeholder="name@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="clientMessage">تفاصيل مشروعك أو رسالتك:</label>
+          <textarea id="clientMessage" name="message" placeholder="اكتب تفاصيل الموقع الذي تريد بناءه..." required></textarea>
         </div>
         <div class="modal-actions">
           <button type="button" onclick="closeContactModal()" class="custom-btn" style="background: #3b3f52; color: white; padding: 8px 16px; font-size: 14px;">إلغاء</button>
@@ -125,11 +234,12 @@
   </div>
 
   <script>
-    function openContactModal() { document.getElementById('contactModal').classList.add('active'); }
-    function closeContactModal() { document.getElementById('contactModal').classList.remove('active'); }
-    document.getElementById('backendForm').addEventListener('submit', function() {
-      alert("تم إرسال رسالتك للباك إند بنجاح! شكراً لك.");
-    });
+    function openContactModal() {
+      document.getElementById('contactModal').classList.add('active');
+    }
+    function closeContactModal() {
+      document.getElementById('contactModal').classList.remove('active');
+    }
   </script>
 </body>
 </html>
