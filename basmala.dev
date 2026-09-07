@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بسملة عمرو | مطورة واجهات مستخدم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --border-color: #e5e7eb;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --card-bg: #1e293b;
+            --primary-color: #3b82f6;
+            --border-color: #334155;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 70px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            text-align: center;
+        }
+
+        .skill-card {
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            font-weight: 700;
+            box-shadow: var(--shadow);
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .project-card p {
+            opacity: 0.85;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .project-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border-color);
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">بسملة عمرو</div>
+        <button class="theme-btn" id="theme-btn">الوضع الليلي 🌙</button>
+    </header>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>مرحباً، أنا بسملة عمرو 👋</h1>
+            <p>مطورة واجهات مستخدم (Front-End Developer) مهتمة ببناء واجهات برمجية حديثة، تفاعلية ومبتكرة.</p>
+            <a href="#projects" class="btn">شاهد أعمالي</a>
+        </section>
+
+        <!-- Skills Section -->
+        <section>
+            <h2 class="section-title">المهارات والتقنيات</h2>
+            <div class="skills-grid">
+                <div class="skill-card">HTML5</div>
+                <div class="skill-card">CSS3</div>
+                <div class="skill-card">JavaScript</div>
+                <div class="skill-card">Responsive Design</div>
+                <div class="skill-card">Git & GitHub</div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2 class="section-title">أبرز المشاريع</h2>
+            <div class="projects-grid">
+                
+                <!-- مشروع لوحة التحكم -->
+                <div class="project-card">
+                    <div>
+                        <h3>لوحة تحكم الخدمات الذكية</h3>
+                        <p>واجهة تفاعلية لإدارة وصيانة الطلبات، تتيح متابعة الأعداد والتعديل على الجدول بسلاسة.</p>
+                        <div class="project-tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://basmalaamr42879-cpu.github.io/smart_service_dashboard/" target="_blank">معاينة مباشرة 🔗</a>
+                    </div>
+                </div>
+
+                <!-- مشروع إضافي كمثال -->
+                <div class="project-card">
+                    <div>
+                        <h3>تطبيق سراجنا</h3>
+                        <p>مشروع واجهة مستخدم تفاعلية بتصميم حديث ودعم للوضع الليلي والنهار.</p>
+                        <div class="project-tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">DOM Manipulation</span>
+                        </div>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" target="_blank">معاينة مباشرة 🔗</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © بسملة عمرو 2026</p>
+    </footer>
+
+    <script>
+        // كود تفعيل الوضع الليلي والنهار
+        const themeBtn = document.getElementById('theme-btn');
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                themeBtn.innerText = 'الوضع الفاتح ☀️';
+            } else {
+                themeBtn.innerText = 'الوضع الليلي 🌙';
+            }
+        });
+    </script>
+</body>
+</html>
