@@ -69,7 +69,6 @@
       cursor: pointer;
     }
 
-    /* أزرار التنقل (التبويبات) */
     .nav-tabs {
       display: flex;
       gap: 8px;
@@ -141,9 +140,16 @@
     }
 
     .text-box {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       line-height: 1.8;
       margin: 15px 0;
+      background: rgba(0, 0, 0, 0.02);
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    body.dark-mode .text-box {
+      background: rgba(255, 255, 255, 0.05);
     }
 
     audio {
@@ -151,7 +157,6 @@
       margin: 15px 0;
     }
 
-    /* السبحة */
     .counter-circle {
       width: 120px;
       height: 120px;
@@ -177,7 +182,6 @@
       cursor: pointer;
     }
 
-    /* مواقيت الصلاة */
     .prayer-list {
       list-style: none;
       margin-top: 15px;
@@ -229,12 +233,11 @@
     <button class="icon-btn" onclick="toggleDarkMode()">🌙 الوضع</button>
   </header>
 
-  <!-- أزرار التنقل بين الأقسام -->
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('quran')">📖 القرآن</button>
-    <button class="tab-btn" onclick="switchTab('azkar')">📿 الأذكار الصوتية</button>
-    <button class="tab-btn" onclick="switchTab('tasbeeh')">🔢 السبحة</button>
-    <button class="tab-btn" onclick="switchTab('prayers')">🕌 مواقيت الصلاة</button>
+    <button class="tab-btn active" onclick="switchTab('quran', event)">📖 القرآن</button>
+    <button class="tab-btn" onclick="switchTab('azkar', event)">📿 الأذكار الصوتية</button>
+    <button class="tab-btn" onclick="switchTab('tasbeeh', event)">🔢 السبحة</button>
+    <button class="tab-btn" onclick="switchTab('prayers', event)">🕌 مواقيت الصلاة</button>
   </div>
 
   <main class="card">
@@ -261,12 +264,12 @@
     <!-- 2. قسم الأذكار الصوتية والنصية -->
     <div id="azkar" class="tab-content">
       <select id="azkarSelect" class="select-box" onchange="updateAzkar()">
-        <option value="sabah">أذكار الصباح</option>
-        <option value="massa">أذكار المساء</option>
-        <option value="sleep">أذكار النوم</option>
+        <option value="sabah">أذكار الصباح (مشاري العفاسي)</option>
+        <option value="massa">أذكار المساء (مشاري العفاسي)</option>
+        <option value="sleep">أذكار النوم (مشاري العفاسي)</option>
       </select>
       <div class="content-title" id="azkarTitle">أذكار الصباح</div>
-      <div class="text-box" id="azkarText">"أصبحنا وأصبح الملك لله، والحمد لله ولا إله إلا الله..."</div>
+      <div class="text-box" id="azkarText">"أصبحنا وأصبح الملك لله، والحمد لله ولا إله إلا الله وحده لا شريك له..."</div>
       <audio id="azkarAudio" controls><source id="azkarAudioSource" src="" type="audio/mpeg"></audio>
     </div>
 
@@ -312,8 +315,7 @@
   <footer>تم التطوير بـ ❤️ | سراجنا</footer>
 
   <script>
-    // --- التبديل بين التبويبات ---
-    function switchTab(tabId) {
+    function switchTab(tabId, event) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       
@@ -321,7 +323,7 @@
       event.target.classList.add('active');
     }
 
-    // --- 1. القرآن الكريم ---
+    // 1. القرآن الكريم
     const surahs = ["الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه", "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس", "التكوير", "الإنفطار", "المطففين", "الإنشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", "الهمزة", "الفيلم", "قريش", "المواعون", "الكوثر", "الكافرون", "النصر", "المسد", "الإخلاص", "الفلق", "الناس"];
 
     const surahSelect = document.getElementById('surahSelect');
@@ -340,22 +342,22 @@
       document.getElementById('audioPlayer').load();
     }
 
-    // --- 2. الأذكار الصوتية والنصية ---
+    // 2. الأذكار الصوتية الصحيحة
     const azkarData = {
       sabah: {
         title: "أذكار الصباح",
-        text: "أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له.",
-        audio: "https://server6.mp3quran.net/thubti/001.mp3"
+        text: "أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.",
+        audio: "https://archive.org/download/Azkars-Alafasy/01-أذكار%20الصباح.mp3"
       },
       massa: {
         title: "أذكار المساء",
-        text: "أمسينا وأمسى الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له.",
-        audio: "https://server6.mp3quran.net/thubti/002.mp3"
+        text: "أمسينا وأمسى الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.",
+        audio: "https://archive.org/download/Azkars-Alafasy/02-أذكار%20المساء.mp3"
       },
       sleep: {
         title: "أذكار النوم",
-        text: "باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها.",
-        audio: "https://server6.mp3quran.net/thubti/003.mp3"
+        text: "باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين.",
+        audio: "https://archive.org/download/Azkars-Alafasy/03-أذكار%20النوم.mp3"
       }
     };
 
@@ -368,7 +370,7 @@
       document.getElementById('azkarAudio').load();
     }
 
-    // --- 3. السبحة الإلكترونية ---
+    // 3. السبحة
     let count = parseInt(localStorage.getItem('sirajna_counter')) || 0;
     document.getElementById('counterDisplay').textContent = count;
 
@@ -384,7 +386,7 @@
       localStorage.setItem('sirajna_counter', count);
     }
 
-    // --- 4. مواقيت الصلاة حسب الموقع ---
+    // 4. مواقيت الصلاة
     function fetchPrayerTimes() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(pos => {
@@ -404,7 +406,7 @@
               document.getElementById('isha').textContent = times.Isha;
             });
         }, () => {
-          document.getElementById('locationText').textContent = "تعذر الحصول على الموقع (يتم عرض مواقيت مكة المكتسبة)";
+          document.getElementById('locationText').textContent = "مواقيت الصلاة (مكة المكرمة)";
           fetchPrayerTimesDefault();
         });
       } else {
@@ -426,7 +428,6 @@
         });
     }
 
-    // --- الوضع الداكن والمشاركة والمفضلة ---
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
       localStorage.setItem('sirajna_theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
@@ -443,7 +444,7 @@
     }
 
     async function shareContent() {
-      const shareData = { title: 'سراجنا', text: 'استمع للقرآن والأذكار عبر تطبيق سراجنا', url: window.location.href };
+      const shareData = { title: 'سراجنا', text: 'موقع سراجنا للقرآن الكريم والأذكار', url: window.location.href };
       if (navigator.share) {
         try { await navigator.share(shareData); } catch (e) {}
       } else {
@@ -452,7 +453,6 @@
       }
     }
 
-    // التشغيل المبدئي
     document.addEventListener('DOMContentLoaded', () => {
       updateAudio();
       updateAzkar();
