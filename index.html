@@ -93,7 +93,6 @@
       text-align: center;
     }
 
-    /* اختيار السورة والشيخ */
     .controls-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -177,28 +176,24 @@
 
   <main class="card">
     
-    <!-- خيارات القارئ والسورة -->
     <div class="controls-grid">
       <div>
         <label style="display:block; margin-bottom:5px; font-size:0.85rem;">اختر القارئ:</label>
         <select id="reciterSelect" class="select-box" onchange="updateAudio()">
           <option value="https://server12.mp3quran.net/maher/">ماهر المعيقلي</option>
-          <option value="https://server8.mp3quran.net/abbaa/">فارس عباد</option>
+          <option value="https://server8.mp3quran.net/frs_a/">فارس عباد</option>
         </select>
       </div>
 
       <div>
         <label style="display:block; margin-bottom:5px; font-size:0.85rem;">اختر السورة:</label>
         <select id="surahSelect" class="select-box" onchange="updateAudio()">
-          <!-- سيتم إضافة الـ 114 سورة تلقائياً من الجافاسكريبت -->
         </select>
       </div>
     </div>
 
-    <!-- اسم السورة المعروضة -->
     <div class="surah-title" id="surahNameDisplay">سورة الفاتحة</div>
 
-    <!-- مشغل الصوتيات -->
     <div class="audio-section">
       <audio id="audioPlayer" controls>
         <source id="audioSource" src="" type="audio/mpeg">
@@ -206,7 +201,6 @@
       </audio>
     </div>
 
-    <!-- أزرار المفضلة والمشاركة -->
     <div class="action-buttons">
       <button id="favBtn" class="action-btn fav-btn" onclick="toggleFavorite()">
         <span class="icon">🤍</span> <span id="favText">المفضلة</span>
@@ -224,7 +218,6 @@
   </footer>
 
   <script>
-    // قائمة أسماء سور القرآن الكريم كاملاً (114 سورة)
     const surahs = [
       "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
       "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
@@ -240,17 +233,15 @@
       "المسد", "الإخلاص", "الفلق", "الناس"
     ];
 
-    // تعبئة قائمة السور برمجياً
     const surahSelect = document.getElementById('surahSelect');
     surahs.forEach((surah, index) => {
       let option = document.createElement('option');
-      let surahNumber = (index + 1).toString().padStart(3, '0'); // لتحويل 1 إلى 001
+      let surahNumber = (index + 1).toString().padStart(3, '0');
       option.value = surahNumber;
       option.textContent = `${index + 1}. ${surah}`;
       surahSelect.appendChild(option);
     });
 
-    // 1. تحديث مشغل الصوتيات
     function updateAudio() {
       const reciterUrl = document.getElementById('reciterSelect').value;
       const selectedSurahNum = document.getElementById('surahSelect').value;
@@ -267,7 +258,6 @@
       checkFavoriteStatus();
     }
 
-    // 2. نظام الوضع الداكن
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
       const isDark = document.body.classList.contains('dark-mode');
@@ -278,7 +268,6 @@
       document.body.classList.add('dark-mode');
     }
 
-    // 3. نظام المفضلة
     function getCurrentItemID() {
       const reciter = document.getElementById('reciterSelect').value.includes('maher') ? 'maher' : 'faras';
       const surah = document.getElementById('surahSelect').value;
@@ -317,7 +306,6 @@
       checkFavoriteStatus();
     }
 
-    // 4. نظام المشاركة
     async function shareContent() {
       const surahName = document.getElementById('surahNameDisplay').innerText;
       const reciterText = document.getElementById('reciterSelect').options[document.getElementById('reciterSelect').selectedIndex].text;
@@ -336,7 +324,6 @@
       }
     }
 
-    // تشغيل الصوت الأول فور التحميل
     document.addEventListener('DOMContentLoaded', updateAudio);
   </script>
 
