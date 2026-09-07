@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>سراجنا</title>
+  <title>سراجنا - القرآن الكريم</title>
   
   <style>
-    /* 1. المتغيرات والتأسيس العام */
     :root {
       --bg-color: #f4f6f9;
       --card-bg: #ffffff;
@@ -18,12 +17,11 @@
       --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     }
 
-    /* 2. تحسينات الوضع الداكن */
     body.dark-mode {
       --bg-color: #121212;
       --card-bg: #1e1e1e;
       --text-color: #e0e0e0;
-      --accent-color: #64b5f6; /* لون أزرق فاتح مريح في الظلام */
+      --accent-color: #64b5f6;
       --accent-hover: #9be7ff;
       --border-color: #333333;
       --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
@@ -47,7 +45,6 @@
       padding: 20px;
     }
 
-    /* تحسين شكل الروابط */
     a {
       color: var(--accent-color);
       text-decoration: none;
@@ -59,25 +56,19 @@
       text-decoration: underline;
     }
 
-    /* الهيدر وأزرار التحكم */
     header {
       width: 100%;
       max-width: 600px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
     .logo {
       font-size: 1.8rem;
       font-weight: bold;
       color: var(--accent-color);
-    }
-
-    .top-controls {
-      display: flex;
-      gap: 10px;
     }
 
     .icon-btn {
@@ -91,7 +82,6 @@
       box-shadow: var(--shadow);
     }
 
-    /* كارت المحتوى */
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -103,14 +93,32 @@
       text-align: center;
     }
 
-    .content-text {
-      font-size: 1.4rem;
-      line-height: 1.8;
+    /* اختيار السورة والشيخ */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
       margin-bottom: 20px;
-      font-weight: 500;
     }
 
-    /* 3. مشغل الصوتيات */
+    .select-box {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .surah-title {
+      font-size: 1.6rem;
+      margin: 15px 0;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
     .audio-section {
       margin: 20px 0;
       width: 100%;
@@ -122,7 +130,6 @@
       outline: none;
     }
 
-    /* 4. شريط الأزرار (المفضلة والمشاركة) */
     .action-buttons {
       display: flex;
       gap: 12px;
@@ -147,14 +154,12 @@
       border-color: var(--accent-color);
     }
 
-    /* تغيير شكل زر المفضلة المفعل */
     .fav-btn.active {
       color: var(--fav-color);
       border-color: var(--fav-color);
       background-color: rgba(231, 76, 60, 0.08);
     }
 
-    /* الفوتر */
     footer {
       margin-top: auto;
       padding-top: 30px;
@@ -165,71 +170,123 @@
 </head>
 <body>
 
-  <!-- الهيدر -->
   <header>
     <div class="logo">سراجنا</div>
-    <div class="top-controls">
-      <!-- زر التبديل للوضع الداكن -->
-      <button class="icon-btn" onclick="toggleDarkMode()">🌙 الوضع</button>
-    </div>
+    <button class="icon-btn" onclick="toggleDarkMode()">🌙 الوضع</button>
   </header>
 
-  <!-- الكارت الرئيسي للمحتوى -->
   <main class="card">
     
-    <!-- نص الذكر أو الآية -->
-    <div class="content-text" id="contentText">
-      "اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ"
+    <!-- خيارات القارئ والسورة -->
+    <div class="controls-grid">
+      <div>
+        <label style="display:block; margin-bottom:5px; font-size:0.85rem;">اختر القارئ:</label>
+        <select id="reciterSelect" class="select-box" onchange="updateAudio()">
+          <option value="https://server12.mp3quran.net/maher/">ماهر المعيقلي</option>
+          <option value="https://server8.mp3quran.net/abbaa/">فارس عباد</option>
+        </select>
+      </div>
+
+      <div>
+        <label style="display:block; margin-bottom:5px; font-size:0.85rem;">اختر السورة:</label>
+        <select id="surahSelect" class="select-box" onchange="updateAudio()">
+          <!-- سيتم إضافة الـ 114 سورة تلقائياً من الجافاسكريبت -->
+        </select>
+      </div>
     </div>
 
-    <!-- نظام الصوتيات -->
+    <!-- اسم السورة المعروضة -->
+    <div class="surah-title" id="surahNameDisplay">سورة الفاتحة</div>
+
+    <!-- مشغل الصوتيات -->
     <div class="audio-section">
       <audio id="audioPlayer" controls>
-        <source src="https://server8.mp3quran.net/afs/002255.mp3" type="audio/mpeg">
+        <source id="audioSource" src="" type="audio/mpeg">
         متصفحك لا يدعم مشغل الصوتيات.
       </audio>
     </div>
 
-    <!-- شريط أزرار المفضلة والمشاركة -->
+    <!-- أزرار المفضلة والمشاركة -->
     <div class="action-buttons">
-      
-      <!-- زر المفضلة -->
       <button id="favBtn" class="action-btn fav-btn" onclick="toggleFavorite()">
         <span class="icon">🤍</span> <span id="favText">المفضلة</span>
       </button>
 
-      <!-- زر المشاركة -->
       <button class="action-btn share-btn" onclick="shareContent()">
         <span class="icon">📤</span> مشاركة
       </button>
-
     </div>
 
   </main>
 
-  <!-- الفوتر مع رابط المحتوى -->
   <footer>
     تم التطوير بـ ❤️ | <a href="https://github.com" target="_blank">رابط المشروع</a>
   </footer>
 
-  <!-- البرمجة والتفاعل (JavaScript) -->
   <script>
-    // 1. نظام الوضع الداكن (Dark Mode)
+    // قائمة أسماء سور القرآن الكريم كاملاً (114 سورة)
+    const surahs = [
+      "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
+      "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
+      "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم",
+      "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر",
+      "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق",
+      "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة",
+      "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج",
+      "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس",
+      "التكوير", "الإنفطار", "المطففين", "الإنشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد",
+      "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات",
+      "القارعة", "التكاثر", "العصر", "الهمزة", "الفيلم", "قريش", "المواعون", "الكوثر", "الكافرون", "النصر",
+      "المسد", "الإخلاص", "الفلق", "الناس"
+    ];
+
+    // تعبئة قائمة السور برمجياً
+    const surahSelect = document.getElementById('surahSelect');
+    surahs.forEach((surah, index) => {
+      let option = document.createElement('option');
+      let surahNumber = (index + 1).toString().padStart(3, '0'); // لتحويل 1 إلى 001
+      option.value = surahNumber;
+      option.textContent = `${index + 1}. ${surah}`;
+      surahSelect.appendChild(option);
+    });
+
+    // 1. تحديث مشغل الصوتيات
+    function updateAudio() {
+      const reciterUrl = document.getElementById('reciterSelect').value;
+      const selectedSurahNum = document.getElementById('surahSelect').value;
+      const selectedSurahIndex = parseInt(selectedSurahNum) - 1;
+      
+      const audioUrl = `${reciterUrl}${selectedSurahNum}.mp3`;
+      const player = document.getElementById('audioPlayer');
+      const source = document.getElementById('audioSource');
+      
+      document.getElementById('surahNameDisplay').textContent = `سورة ${surahs[selectedSurahIndex]}`;
+      
+      source.src = audioUrl;
+      player.load();
+      checkFavoriteStatus();
+    }
+
+    // 2. نظام الوضع الداكن
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
       const isDark = document.body.classList.contains('dark-mode');
       localStorage.setItem('sirajna_theme', isDark ? 'dark' : 'light');
     }
 
-    // استعادة وضع الإضاءة المفضل للمستخدم عند التحميل
     if (localStorage.getItem('sirajna_theme') === 'dark') {
       document.body.classList.add('dark-mode');
     }
 
-    // 2. نظام المفضلة (Favorites)
-    const itemID = "ayat_alkursi"; // معرّف العنصر الحالي
+    // 3. نظام المفضلة
+    function getCurrentItemID() {
+      const reciter = document.getElementById('reciterSelect').value.includes('maher') ? 'maher' : 'faras';
+      const surah = document.getElementById('surahSelect').value;
+      return `${reciter}_${surah}`;
+    }
 
     function checkFavoriteStatus() {
+      const itemID = getCurrentItemID();
       let favorites = JSON.parse(localStorage.getItem('sirajna_favs')) || [];
       const favBtn = document.getElementById('favBtn');
       const favText = document.getElementById('favText');
@@ -246,6 +303,7 @@
     }
 
     function toggleFavorite() {
+      const itemID = getCurrentItemID();
       let favorites = JSON.parse(localStorage.getItem('sirajna_favs')) || [];
       const index = favorites.indexOf(itemID);
 
@@ -259,30 +317,27 @@
       checkFavoriteStatus();
     }
 
-    // 3. نظام المشاركة (Share API)
+    // 4. نظام المشاركة
     async function shareContent() {
-      const textToShare = document.getElementById('contentText').innerText;
+      const surahName = document.getElementById('surahNameDisplay').innerText;
+      const reciterText = document.getElementById('reciterSelect').options[document.getElementById('reciterSelect').selectedIndex].text;
+      
       const shareData = {
         title: 'سراجنا',
-        text: textToShare,
+        text: `استمع إلى ${surahName} بصوت القارئ ${reciterText} عبر موقع سراجنا`,
         url: window.location.href
       };
 
       if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-        } catch (err) {
-          console.log('تم إلغاء المشاركة');
-        }
+        try { await navigator.share(shareData); } catch (err) {}
       } else {
-        // إذا كان المتصفح لا يدعم المشاركة المباشرة تقوم بالنسخ
-        navigator.clipboard.writeText(`${textToShare}\n\nعبر موقع سراجنا:\n${window.location.href}`);
-        alert('تم نسخ النص والرابط للحافظة بنجاح!');
+        navigator.clipboard.writeText(`${shareData.text}\n${window.location.href}`);
+        alert('تم نسخ رابط السورة للحافظة بنجاح!');
       }
     }
 
-    // تشغيل فحص المفضلة عند تحميل الصفحة مباشرة
-    document.addEventListener('DOMContentLoaded', checkFavoriteStatus);
+    // تشغيل الصوت الأول فور التحميل
+    document.addEventListener('DOMContentLoaded', updateAudio);
   </script>
 
 </body>
