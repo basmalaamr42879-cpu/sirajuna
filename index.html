@@ -264,9 +264,9 @@
     <!-- 2. قسم الأذكار الصوتية والنصية -->
     <div id="azkar" class="tab-content">
       <select id="azkarSelect" class="select-box" onchange="updateAzkar()">
-        <option value="sabah">أذكار الصباح (مشاري العفاسي)</option>
-        <option value="massa">أذكار المساء (مشاري العفاسي)</option>
-        <option value="sleep">أذكار النوم (مشاري العفاسي)</option>
+        <option value="sabah">أذكار الصباح</option>
+        <option value="massa">أذكار المساء</option>
+        <option value="sleep">أذكار النوم</option>
       </select>
       <div class="content-title" id="azkarTitle">أذكار الصباح</div>
       <div class="text-box" id="azkarText">"أصبحنا وأصبح الملك لله، والحمد لله ولا إله إلا الله وحده لا شريك له..."</div>
@@ -342,22 +342,22 @@
       document.getElementById('audioPlayer').load();
     }
 
-    // 2. الأذكار الصوتية الصحيحة
+    // 2. الأذكار الصوتية بأسرع سيرفرات مباشرة للتحميل والتشغيل
     const azkarData = {
       sabah: {
         title: "أذكار الصباح",
         text: "أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.",
-        audio: "https://archive.org/download/Azkars-Alafasy/01-أذكار%20الصباح.mp3"
+        audio: "https://files.hisnmuslim.com/audio/ar_hisn_almuslim_027.mp3"
       },
       massa: {
         title: "أذكار المساء",
         text: "أمسينا وأمسى الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.",
-        audio: "https://archive.org/download/Azkars-Alafasy/02-أذكار%20المساء.mp3"
+        audio: "https://files.hisnmuslim.com/audio/ar_hisn_almuslim_028.mp3"
       },
       sleep: {
         title: "أذكار النوم",
         text: "باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين.",
-        audio: "https://archive.org/download/Azkars-Alafasy/03-أذكار%20النوم.mp3"
+        audio: "https://files.hisnmuslim.com/audio/ar_hisn_almuslim_029.mp3"
       }
     };
 
@@ -366,8 +366,12 @@
       const data = azkarData[type];
       document.getElementById('azkarTitle').textContent = data.title;
       document.getElementById('azkarText').textContent = data.text;
-      document.getElementById('azkarAudioSource').src = data.audio;
-      document.getElementById('azkarAudio').load();
+      
+      const azkarPlayer = document.getElementById('azkarAudio');
+      const azkarSource = document.getElementById('azkarAudioSource');
+      
+      azkarSource.src = data.audio;
+      azkarPlayer.load();
     }
 
     // 3. السبحة
